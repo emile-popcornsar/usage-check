@@ -10,7 +10,6 @@ import { AccountsService } from './accountsService';
 import { claudeUsable, createRunner, findClaude, type ClaudeRunner } from './claudeCli';
 import { readVersion } from './claudeCommands';
 import { loadStore, saveStore } from './store';
-import { startAutoUpdate } from './updater';
 
 if (process.env.USAGE_CHECK_DATA_DIR) {
   app.setPath('userData', process.env.USAGE_CHECK_DATA_DIR);
@@ -235,7 +234,7 @@ function createWindow(): void {
       contextIsolation: true,
       nodeIntegration: false,
       sandbox: true,
-      spellcheck: false, // the spellchecker can download dictionaries; apart from the update check the program makes no network request of its own
+      spellcheck: false, // the spellchecker can download dictionaries; the program makes no network request of its own
     },
   });
   win.removeMenu();
@@ -293,8 +292,6 @@ if (!app.requestSingleInstanceLock()) {
     registerIpc();
     ready = startService().catch(logError);
     createWindow();
-    // Only an installed copy updates itself: not a development run, and not a smoke or test run on its own data folder.
-    if (app.isPackaged && !process.env.USAGE_CHECK_DATA_DIR) startAutoUpdate(() => win, logError);
     // The only periodic timer: made once here, cleared in shutdown(). Switching auto refresh or rebuilding the service
     // does not touch it; each tick asks the current service whether to read.
     timer = setInterval(() => {

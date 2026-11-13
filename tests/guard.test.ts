@@ -12,11 +12,8 @@ const offenders = (re: RegExp) => src.filter((f) => re.test(f.text)).map((f) => 
 it('never touches the login files', () => {
   expect(offenders(/\.credentials|keychain|keytar|safeStorage/i)).toEqual([]);
 });
-it('makes no network request of its own apart from the update check', () => {
-  expect(offenders(/\bfetch\(|XMLHttpRequest|WebSocket|from 'node:https?'|from 'https?'|require\('https?'\)|net\.request|https?:\/\//)).toEqual([]);
-});
-it('reaches the network only through the updater', () => {
-  expect(offenders(/electron-updater/).map((p) => p.split('\\').join('/'))).toEqual(['src/main/updater.ts']);
+it('makes no network request of its own', () => {
+  expect(offenders(/\bfetch\(|XMLHttpRequest|WebSocket|from 'node:https?'|from 'https?'|require\('https?'\)|net\.request|https?:\/\/|electron-updater/)).toEqual([]);
 });
 it('runs only the agreed Claude Code commands', () => {
   const cmds = readFileSync('src/main/claudeCommands.ts', 'utf8');

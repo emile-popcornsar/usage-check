@@ -11,56 +11,16 @@
   },
   "scripts": {
     "build": "node scripts/build.mjs",
-    "start": "npm run build && electron .",
+    "start": "node scripts/start.mjs",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "smoke": "npm run build && node scripts/smoke.mjs",
-    "dist": "npm run build && electron-builder --win nsis --x64 --publish never"
+    "smoke": "npm run build && node scripts/smoke.mjs"
   },
   "devDependencies": {
     "@types/node": "^24",
-    "@types/semver": "^7.8.0",
-    "electron": "^45.2.3",
-    "electron-builder": "^26.18.0",
-    "electron-updater": "^6.8.11",
+    "electron": "42.11.4",
     "esbuild": "^0.28.2",
     "typescript": "^7.0.2",
     "vitest": "^5.1.0"
-  },
-  "build": {
-    "appId": "local.usagecheck.app",
-    "productName": "Usage Check",
-    "directories": {
-      "output": "release"
-    },
-    "files": [
-      "dist/**/*",
-      "package.json"
-    ],
-    "win": {
-      "icon": "build/icon.ico",
-      "target": [
-        {
-          "target": "nsis",
-          "arch": [
-            "x64"
-          ]
-        }
-      ]
-    },
-    "nsis": {
-      "oneClick": true,
-      "perMachine": false,
-      "runAfterFinish": true,
-      "artifactName": "UsageCheck-Setup-${version}-x64.exe"
-    },
-    "publish": [
-      {
-        "provider": "github",
-        "owner": "emile-popcornsar",
-        "repo": "usage-check",
-        "releaseType": "release"
-      }
-    ]
   }
 }

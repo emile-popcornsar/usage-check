@@ -78,13 +78,10 @@ const SCENARIOS = {
   'no-claude': { accounts: [], claudeMissing: true },
 };
 
-const args = process.argv.slice(2);
-const exeAt = args.indexOf('--exe');
-const exe = exeAt >= 0 ? resolve(args[exeAt + 1] ?? '') : null;
-const scenario = args[0];
+const scenario = process.argv[2];
 const spec = SCENARIOS[scenario];
 if (!spec) {
-  console.error(`사용법: node scripts/smoke.mjs <${Object.keys(SCENARIOS).join('|')}> [--exe <경로>]`);
+  console.error(`사용법: node scripts/smoke.mjs <${Object.keys(SCENARIOS).join('|')}>`);
   process.exit(1);
 }
 
@@ -123,16 +120,13 @@ for (const key of Object.keys(env)) {
   if (['CLAUDE_CONFIG_DIR', 'ELECTRON_RUN_AS_NODE'].includes(key.toUpperCase())) delete env[key];
 }
 
-// A portable exe unpacks itself first, so it gets a much longer timeout.
-const [command, commandArgs, timeout] = exe
-  ? [exe, [], 600_000]
-  : [createRequire(import.meta.url)('electron'), ['.'], 180_000];
-const child = spawn(command, commandArgs, { env, stdio: 'inherit' });
+const timeout = 180_000;
+const child = spawn(createRequire(import.meta.url)('electron'), ['.'], { env, stdio: 'inherit' });
 const result = await new Promise((done) => {
   let timedOut = false;
   const timer = setTimeout(() => {
     timedOut = true;
-    // A portable exe is a wrapper around the real app: end the whole tree by PID (never by image name).
+    // End the whole tree by PID (never by image name).
     if (process.platform === 'win32') spawnSync('taskkill', ['/PID', String(child.pid), '/T', '/F'], { stdio: 'ignore' });
     else child.kill('SIGKILL');
   }, timeout);
