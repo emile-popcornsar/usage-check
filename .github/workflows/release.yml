@@ -32,7 +32,13 @@ jobs:
       - run: npm run typecheck
       - run: npm test
       - run: npm run build
-      - name: Build the installer and publish the release
-        run: npx electron-builder --win nsis --x64 --publish always
+      - name: Build the installer
+        run: npx electron-builder --win nsis --x64 --publish never
+      # One release made in one call. electron-builder's own publishing uploads the files in parallel and can
+      # create two releases for the same tag, and then the updater cannot find latest.yml (seen on v0.1.0).
+      - name: Publish the release
+        shell: bash
+        run: |
+          gh release create "$GITHUB_REF_NAME"             release/UsageCheck-Setup-*.exe release/UsageCheck-Setup-*.exe.blockmap release/latest.yml             --title "$GITHUB_REF_NAME" --generate-notes
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
