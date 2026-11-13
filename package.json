@@ -1,7 +1,7 @@
 {
   "name": "usage-check",
   "productName": "Usage Check",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Claude 계정 사용량 확인 프로그램",
   "license": "MIT",
