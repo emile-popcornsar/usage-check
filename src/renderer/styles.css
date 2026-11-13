@@ -1,0 +1,614 @@
+:root {
+  --bg: #F4F4F1;
+  --text: #1B1B19;
+  --text-sub: #55554F;
+  --card: #FFFFFF;
+  --card-border: #DCDCD5;
+  --button-border: #BDBDB4;
+  --accent: #D97757;
+  --on-accent: #141413;
+  --accent-text: #9C4A28;
+  --bar-bg: #E3E3DC;
+  --bar-stale: #E8B9A6;
+  --danger: #B42318;
+  --danger-text: #A3231B;
+  --info-bg: #FBEEE8;
+  --info-border: #EBC2B0;
+  --warn-bg: #FDECEA;
+  --warn-border: #F0B8B2;
+  /* mockup colours the plan's list does not name */
+  --text-body: #33332F;
+  --disabled-border: #D3D3CB;
+  --disabled-text: #6B6B63;
+  --scrim: rgba(27, 27, 25, 0.5);
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  word-break: keep-all; /* wrap Korean between words, not inside them */
+}
+
+#app {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+h1, h2, p, ol {
+  margin: 0;
+}
+
+.icon {
+  display: block;
+  flex-shrink: 0;
+}
+
+/* buttons */
+button {
+  font: inherit;
+}
+
+.btn {
+  height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--button-border);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--text);
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.btn.primary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.btn:disabled {
+  border-color: var(--disabled-border);
+  background: var(--bg);
+  color: var(--disabled-text);
+  cursor: default;
+}
+
+.btn.large {
+  height: 44px;
+  padding: 0 24px;
+}
+
+.btn.wide {
+  padding: 0 20px;
+}
+
+.btn.small {
+  height: 36px;
+  padding: 0 12px;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.btn.close {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.mascot {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mascot {
+  position: relative;
+}
+
+.title.talking h1 {
+  visibility: hidden;
+}
+
+/* the character saying its name, to its right, in the heading's place for a moment */
+.bubble {
+  position: absolute;
+  left: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  padding: 3px 10px;
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  background: var(--card);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.bubble::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  margin-top: -5px;
+  border-left: 1px solid var(--card-border);
+  border-bottom: 1px solid var(--card-border);
+  background: var(--card);
+  transform: rotate(45deg);
+}
+
+.mascot svg {
+  display: block;
+}
+
+.mascot.small {
+  width: 44px;
+  height: 44px;
+}
+
+.mascot.big {
+  width: 140px;
+  height: 132px;
+}
+
+/* header and footer */
+.top {
+  flex-shrink: 0;
+  display: flex;
+  flex-wrap: wrap; /* when zoomed in, the buttons move to a second row instead of covering the title */
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px 12px;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+h1 {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.actions {
+  margin-left: auto; /* stays at the right end, also on a second row */
+  display: flex;
+  gap: 8px;
+}
+
+.foot {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 28px; /* the toggle's height; with the padding the footer stays as tall as a line of text with 10px padding */
+  padding: 5px 16px;
+  border-top: 1px solid var(--card-border);
+  font-size: 12px;
+  color: var(--text-sub);
+}
+
+.foot-text {
+  min-width: 0; /* wraps next to the toggle; the footer grows instead of hiding text such as the update request */
+}
+
+.btn.toggle {
+  flex-shrink: 0;
+  height: 28px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.toggle-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--button-border);
+}
+
+.toggle-dot.on {
+  background: var(--accent);
+}
+
+/* body */
+.body {
+  flex-grow: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 16px 12px;
+}
+
+.body.center {
+  align-items: center;
+  justify-content: safe center;
+  gap: 20px;
+  padding: 0 44px 40px;
+  text-align: center;
+}
+
+.body.center h2 {
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.body.center .notice {
+  align-self: stretch;
+  text-align: left;
+}
+
+.steps {
+  padding: 0 0 0 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+  color: var(--text-body);
+}
+
+.lead {
+  color: var(--text-body);
+}
+
+.fine {
+  font-size: 12px;
+  color: var(--text-sub);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap; /* zoomed in, the two buttons stack instead of overflowing sideways */
+  justify-content: center;
+  gap: 8px;
+}
+
+.hint {
+  margin: 6px 4px 0;
+  font-size: 13px;
+  color: var(--text-sub);
+}
+
+/* notice band */
+.notice {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid var(--info-border);
+  border-radius: 8px;
+  background: var(--info-bg);
+  font-size: 13px;
+}
+
+.notice .icon {
+  margin-top: 1px;
+  color: var(--accent-text);
+}
+
+.notice.warn {
+  border-color: var(--warn-border);
+  background: var(--warn-bg);
+}
+
+.notice.warn .icon {
+  color: var(--danger-text);
+}
+
+/* account card */
+.card {
+  position: relative; /* for the drop line */
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  background: var(--card);
+  user-select: none; /* dragging a card never selects its text */
+}
+
+.card.alert {
+  border-color: var(--danger);
+}
+
+.card.dragging {
+  opacity: 0.4;
+}
+
+/* drop line: 2px in the middle of the 10px gap between cards */
+.card.drop-before::before,
+.card.drop-after::after {
+  content: '';
+  position: absolute;
+  left: -1px;
+  right: -1px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--accent);
+}
+
+.card.drop-before::before {
+  top: -7px;
+}
+
+.card.drop-after::after {
+  bottom: -7px;
+}
+
+/* nothing above the first card is visible in the scrolling list, so its line sits on the card's top edge */
+.card.drop-before:first-child::before {
+  top: -1px;
+}
+
+.card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.email {
+  min-width: 0;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.badges {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge-active {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--accent-text);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.badge-alert {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--danger-text);
+}
+
+.badge-stale {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  border: 1px solid var(--button-border);
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-body);
+}
+
+.lines {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.lines.dim {
+  opacity: 0.5;
+}
+
+.limit-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--danger-text);
+}
+
+.usage {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.usage-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.usage-value {
+  color: var(--text-sub);
+  text-align: right;
+}
+
+.usage-value strong {
+  color: var(--text);
+}
+
+.usage-value strong.limit {
+  color: var(--danger-text);
+}
+
+.bar {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--bar-bg);
+}
+
+.bar-fill {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--accent);
+}
+
+.bar-fill.stale {
+  background: var(--bar-stale);
+}
+
+.bar-fill.limit {
+  background: var(--danger);
+}
+
+.card-text {
+  font-size: 13px;
+  color: var(--text-body);
+}
+
+.card-text.sub {
+  color: var(--text-sub);
+}
+
+.preview {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: var(--bg);
+  font-size: 12px;
+  color: var(--text-body);
+}
+
+.preview-title {
+  font-weight: 500;
+}
+
+.preview-line {
+  font-family: Consolas, 'Courier New', monospace;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.card-foot {
+  min-height: 36px; /* the height of [다시 로그인], so a card does not change size when it appears */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.card-foot.end {
+  justify-content: flex-end;
+}
+
+.expiry {
+  font-size: 12px;
+  color: var(--text-sub);
+}
+
+.expiry.soon {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 700;
+  color: var(--danger-text);
+}
+
+.card-buttons {
+  flex-shrink: 0;
+  display: flex;
+  gap: 6px;
+}
+
+/* login overlay */
+.overlay {
+  position: absolute;
+  inset: 0;
+  padding: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--scrim);
+}
+
+.dialog {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 28px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  border-radius: 12px;
+  background: var(--card);
+  text-align: center;
+}
+
+.dialog h2 {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.dialog-note {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--bg);
+  font-size: 13px;
+  color: var(--text-body);
+}
+
+.spinner .track {
+  stroke: var(--disabled-border);
+}
+
+.spinner .arc {
+  stroke: var(--accent);
+}
+
+.terminal {
+  color: var(--text-sub);
+}

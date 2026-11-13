@@ -1,0 +1,12 @@
+spike-profiles/
+
+node_modules/
+dist/
+release/
+artifacts/
+build/
+
+# internal development records: kept on this PC (and in the local internal-history branch), not published
+docs/superpowers/
+docs/handoffs/
+docs/checks/
