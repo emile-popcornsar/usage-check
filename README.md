@@ -25,7 +25,8 @@ npm install
 npm start
 ```
 
-- `npm install`은 필요한 부품을 내려받는 단계로, 처음 한 번만 하며 1~2분 걸립니다.
+- `npm install`은 필요한 부품을 내려받는 단계로, 처음 한 번만 합니다.
+- 처음에는 부품을 내려받느라 `npm install`이나 첫 `npm start`가 1~2분 걸릴 수 있습니다. 그다음부터는 몇 초 만에 열립니다.
 - 다음에 열 때는 받아 둔 `usage-check` 폴더에서 `npm start`만 실행합니다.
 - Claude Code를 쓰고 있다면 "usage-check 폴더에서 npm start 실행해 줘"라고 시켜도 됩니다.
 
@@ -93,7 +94,7 @@ npm start
 
 - 이 프로그램은 로그인 정보를 읽거나 복사하거나 저장하거나 전송하지 않습니다.
 - 자체 로그인 화면이 없습니다. 로그인은 Claude Code의 공식 화면에서 이루어집니다.
-- 프로그램 자체는 네트워크 요청을 보내지 않습니다. `npm install`이 부품을 내려받고, `npm start`가 git으로 이 저장소의 새 내용을 받을 뿐입니다.
+- 프로그램 자체는 네트워크 요청을 보내지 않습니다. 부품은 `npm install`과 첫 `npm start`가 내려받고, 그 뒤로는 `npm start`가 git으로 이 저장소의 새 내용을 받을 뿐입니다.
 - 각 계정의 로그인은 Claude Code가 이 프로그램용으로 만든 계정별 폴더에 보관하며, 그 폴더는 운영체제의 앱 데이터 폴더에 있습니다.
 
 이 프로그램은 Anthropic이나 Claude의 제품이 아니며, Anthropic과 제휴하거나 Anthropic의 승인을 받은 것이 아닙니다.
